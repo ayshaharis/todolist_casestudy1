@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">   
+    <script src="main.js" defer></script>
+    <script src="jQuery3.2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Home</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand-title">ToDO </div>
+        <a href="" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <div class="navbar-links"> <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Log out</a></li>
+            <li><a href="javascript:todo()">TO DO LIST</a></li>
+        </ul>
+      </div>
+    </nav>  
+    <div class="container">
+        <table class="table table-stripped border">
+            <thead>
+                <tr>
+                    <th>TASKS</th>
+                    <th> STATUS</th>
+                   
+                </tr>
+                
+                   
+               
+            </thead>
+            <tbody id="data">
+
+            </tbody>
+        </table>   
+      
+    </div>
+         
+  
+
+    <script> 
+
+        fetch("https://jsonplaceholder.typicode.com/todos")
+    .then(res=>{
+        res.json().then(data=>{
+            console.log(data);
+            if(data.length>0)
+                var temp="";
+            data.forEach(element => {
+                temp+="<tr>";
+                temp+="<td>"+element.title+"</td>";
+                // temp+="<td>"+element.completed+"</td>";
+                if(element.completed == true)
+                {
+                    temp+="<td><input type ='checkbox' checked disabled></td></tr>";
+                }
+                else
+                {
+                    temp+="<td><input class='statusCheck' type ='checkbox' onclick='displayMessage()'></td></tr>";
+                }  
+            })
+            document.getElementById("data").innerHTML=temp;
+        })
+    })
+
+    function displayMessage()
+    {
+        var count = 0;
+        $('.statusCheck').each(function(index)
+        {
+               if(this.checked == true)
+               {
+                   count++;    
+               }
+        });
+        alert("Congragulations !! You have completed " +count + " Tasks!!");
+
+    }
+      
+    </script>
+</body>
+</html>
